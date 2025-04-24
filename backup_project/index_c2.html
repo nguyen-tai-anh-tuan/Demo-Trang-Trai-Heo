@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="utf-8">
+    <title>GIÁM SÁT CHUỒNG 2</title>
+    <link rel="stylesheet" href="style_chuong.css">
+    <link rel="icon" type="image/png" href="img/logo-web.png">
+</head>
+<body>
+    <!-- Header -->
+    <div class="header">
+        <img src="img/logo-header.jpg" alt="logo-heo" id="logo-header">
+        <h1 class="main-title">GIÁM SÁT CHUỒNG 2</h1>
+        <span id="clock" class="clock"></span>
+    </div>
+
+    <!-- Container -->
+    <div class="container">
+        <!-- Cột trái: Biểu đồ -->
+        <div class="left-col">
+            <div class="chart">
+                <canvas id="tempChart" class="subchart"></canvas>
+                <canvas id="humiChart" class="subchart"></canvas>
+                <canvas id="co2Chart" class="subchart"></canvas>
+            </div>
+            <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+        </div>
+
+        <!-- Cột phải -->
+        <div class="right-col">
+            <!-- Thanh điều hướng -->
+            <nav class="nav-bar">
+                <ul class="nav-list">
+                    <li class="nav-item">
+                        <a href="index.html"><button class="nav-choose">TRANG TỔNG QUAN</button></a>
+                    </li>
+                </ul>
+            </nav>
+
+            <!-- Thông tin cơ bản -->
+            <div class="info">
+                <div class="info-item">
+                    <p class="info-text">Nhiệt độ:</p>
+                    <div class="icon-value">
+                        <img src="../img/mid-temp.png" alt="temp" class="info-icon">
+                        <div class="info-value">
+                            <span id="temp-value"></span>
+                        </div>
+                    </div>
+                </div>
+                <div class="info-item">
+                    <p class="info-text">Độ ẩm:</p>
+                    <div class="icon-value">
+                        <img src="../img/humi.png" alt="humi" class="info-icon">
+                        <div class="info-value">
+                            <span id="humi-value"></span>
+                        </div>
+                    </div>
+                </div>
+                <div class="info-item">
+                    <p class="info-text">Lượng khí CO2:</p>
+                    <div class="icon-value">
+                        <img src="../img/co2.png" alt="co2" class="info-icon">
+                        <div class="info-value">
+                            <span id="co2-value"></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Thông số chi tiết -->
+            <div class="detailed-info">
+                <div class="info-item">
+                    <p class="info-text">Nhiệt độ</p>
+                    <div class="icon-value">
+                        <img src="../img/mid-temp.png" alt="temp" class="info-icon">
+                        <div class="info-value-group">
+                            <div class="info-value-pair">
+                                <span class="info-label">Cao nhất: </span>
+                                <span id="temp-high"></span>
+                                <p id="temp-high-time" class="info-time"></p>
+                            </div>
+                            <div class="info-value-pair">
+                                <span class="info-label">Thấp nhất: </span>
+                                <span id="temp-low"></span>
+                                <p id="temp-low-time" class="info-time"></p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="info-item">
+                    <p class="info-text">Độ ẩm</p>
+                    <div class="icon-value">
+                        <img src="../img/humi.png" alt="humi" class="info-icon">
+                        <div class="info-value-group">
+                            <div class="info-value-pair">
+                                <span class="info-label">Cao nhất: </span>
+                                <span id="humi-high"></span>
+                                <p id="humi-high-time" class="info-time"></p>
+                            </div>
+                            <div class="info-value-pair">
+                                <span class="info-label">Thấp nhất: </span>
+                                <span id="humi-low"></span>
+                                <p id="humi-low-time" class="info-time"></p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="info-item">
+                    <p class="info-text">Lượng khí CO2</p>
+                    <div class="icon-value">
+                        <img src="../img/co2.png" alt="co2" class="info-icon">
+                        <div class="info-value-group">
+                            <div class="info-value-pair">
+                                <span class="info-label">Cao nhất: </span>
+                                <span id="co2-high"></span>
+                                <p id="co2-high-time" class="info-time"></p>
+                            </div>
+                            <div class="info-value-pair">
+                                <span class="info-label">Thấp nhất: </span>
+                                <span id="co2-low"></span>
+                                <p id="co2-low-time" class="info-time"></p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Cảnh báo -->
+            <div class="alerts">
+                <p id="alert-message" class="alert-text"></p>
+            </div>
+
+            <!-- Điều khiển thiết bị -->
+            <div class="device">
+                <div class="device-control">
+                    <img src="../img/pump-off.png" alt="pump" class="device-icon" id="pump-img">
+                    <p class="device-title">BƠM NƯỚC</p>
+                    <p class="device-status" id="pump-status">Trạng thái: TẮT</p>
+                    <p class="device-time" id="pump-time">Thời gian bật: 0 phút</p>
+                    <p class="device-total" id="pump-total">Tổng thời gian hôm nay: 0 phút</p>
+                    <div>
+                        <button class="device-btn" id="btn-pump-on">BẬT</button>
+                        <button class="device-btn" id="btn-pump-off">TẮT</button>
+                    </div>
+                </div>
+                <div class="device-control">
+                    <img src="../img/fan-off1.png" alt="fan" class="device-icon" id="fan-img">
+                    <p class="device-title">QUẠT THÔNG GIÓ</p>
+                    <p class="device-status" id="fan-status">Trạng thái: TẮT</p>
+                    <p class="device-time" id="fan-time">Thời gian bật: 0 phút</p>
+                    <p class="device-total" id="fan-total">Tổng thời gian hôm nay: 0 phút</p>
+                    <div>
+                        <button class="device-btn" id="btn-fan-on">BẬT</button>
+                        <button class="device-btn" id="btn-fan-off">TẮT</button>
+                    </div>
+                </div>
+                <div class="device-control">
+                    <img src="../img/heater-off.png" alt="heater" class="device-icon" id="heater-img">
+                    <p class="device-title">MÁY SƯỞI</p>
+                    <p class="device-status" id="heater-status">Trạng thái: TẮT</p>
+                    <p class="device-time" id="heater-time">Thời gian bật: 0 phút</p>
+                    <p class="device-total" id="heater-total">Tổng thời gian hôm nay: 0 phút</p>
+                    <div>
+                        <button class="device-btn" id="btn-heater-on">BẬT</button>
+                        <button class="device-btn" id="btn-heater-off">TẮT</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Nhật ký hoạt động -->
+            <div class="activity-log">
+                <h2 class="log-title">NHẬT KÝ HOẠT ĐỘNG</h2>
+                <ul id="log-list" class="log-list"></ul>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <div class="footer">
+        <div class="footer-content">
+          <p> TWICE T <br>
+            Email: pntuantu04@gmail.com - nguyentaianhtuan2004@gmail.com <br>
+            Zalo: 0376 985 902 - 0396 039 917</p>
+        </div>
+        <div class="footer-contact">
+          <a href="https://www.facebook.com/pntuantu04" target="_blank"> <img src="img/facebook.jpg" alt="ytb-icon" id="logo-fb"> </a>
+          <a href="https://www.youtube.com/@AnhTuan9104-h1d/videos" target="_blank"> <img src="img/youtube.jpg" alt="ytb-icon" id="logo-ytb"> </a>
+        </div>
+
+      </div>
+
+    <!-- Scripts -->
+    <script src="https://www.gstatic.com/firebasejs/8.2.10/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.2.10/firebase-database.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.2.10/firebase-analytics.js"></script>
+    <script>
+        const chuongName = 'chuong2'; // Đặt tên chuồng cho script
+    </script>
+    <script src="script_chuong.js"></script>
+</body>
+</html>
